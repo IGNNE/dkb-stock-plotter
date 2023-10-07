@@ -96,9 +96,18 @@ if args.r:
     list_of_time_series.append(create_time_series(lambda p: p.rate_ct/100))
     names_of_plots.append("Rates per Item")
 
-# actual drawing
+
 lstyles = ["solid", "dashed", "dashdot", "dotted"]
 fig, axs = plt.subplots(len(list_of_time_series), 1, sharex=True)
+
+# edge case, if we only have one plot, it will not return an array, so let's make it into one
+if len(list_of_time_series) == 1:
+    tmp = fig
+    fig = [tmp]
+    tmp = axs
+    axs = [tmp]
+
+# actual drawing
 for i in range(0, len(list_of_time_series)):
     ts = list_of_time_series[i]
     for n in ts:
